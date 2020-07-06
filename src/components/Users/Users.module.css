@@ -1,0 +1,22 @@
+
+.whole_style {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 30px;
+}
+
+.users {
+    display: flex;
+    flex-direction: column;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    margin: 5px;
+    font: 14px "Century Gothic", Futura, sans-serif;
+
+}
+.selectedPage {
+    font-weight: bold;
+}

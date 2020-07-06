@@ -1,0 +1,24 @@
+.item a{
+    height: 30px;
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    text-shadow: lightslategrey;
+    font-family: Georgia;
+
+
+}
+.navigate {
+
+}
+.item {
+    background-color: deeppink;
+    border: dimgrey solid 1px;
+    margin: 1px;
+    padding: 0;
+    box-shadow: dimgrey;
+    text-align: center;
+}
+.item a.active {
+    color: rebeccapurple;
+}

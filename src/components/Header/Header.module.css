@@ -1,0 +1,20 @@
+.header img {
+    width: 100px;
+}
+
+.header {
+    grid-area: header;
+    background-color: lightpink;
+}
+
+.login_block {
+ float: right;
+    color: white;
+    font-weight: bold;
+}
+
+.login_block a{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}

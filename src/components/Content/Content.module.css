@@ -1,0 +1,10 @@
+.content {
+    grid-area: content;
+}
+
+.content img {
+    position: relative;
+    width: 1100px;
+    height: 200px;
+}
+

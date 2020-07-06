@@ -1,0 +1,29 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    background-color: aquamarine;
+}
+
+.dialogs_items {
+padding: 10px;
+}
+
+.item {
+text-decoration: none;
+}
+.item a{
+    text-decoration: none;
+    font-family: "Calibri Light", sans-serif;
+    color: rebeccapurple;
+}
+
+.messages {
+    padding: 10px;
+}
+
+.message_item {
+
+}
+.item a.active {
+    color: gold;
+}
