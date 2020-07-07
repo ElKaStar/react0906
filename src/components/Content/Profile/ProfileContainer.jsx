@@ -4,8 +4,8 @@ import * as axios from "axios";
 import {connect} from "react-redux";
 import {
     addRequestedUserIdActionCreator,
-    getProfileThunkCreator,
-    getUserInfoActionCreator
+    getProfileThunkCreator, getStatusThunkCreator,
+    getUserInfoActionCreator, isFetchingActionCreator, updateStatusThunkCreator
 } from "../../../Redux/content-reducer";
 import Loader from "./../../Users/loader";
 import {Redirect, Route} from 'react-router-dom'
@@ -26,6 +26,7 @@ class ProfileClass extends React.Component {
         //console.log(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.currentUserID}`)
         let userID = (!this.props.match.params.UserID? this.props.authUserID : this.props.match.params.UserID)
        this.props.getProfileThunkCreator(userID)
+        this.props.getStatusThunkCreator(userID)
 
     }
 
@@ -41,14 +42,16 @@ class ProfileClass extends React.Component {
     }
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileClass)
+//let AuthRedirectComponent = withAuthRedirect(ProfileClass)
 
 let mapStateToProps = (state) => {
     console.log(state);
     return {
         userInfo: state.myPosts.userInfo,
         requestUserId: state.myPosts.requestUserId,
-        authUserID: state.auth.userID
+        authUserID: state.auth.userID,
+        status:state.myPosts.status,
+        isFetching: state.myPosts.isFetching
 
     }
 }
@@ -57,7 +60,9 @@ let mapDispatchToProps = (dispatch) => {
     return {
         getUserInfo: (userInfo) => {dispatch(getUserInfoActionCreator(userInfo))},
         addRequestedUserId: () => {dispatch(addRequestedUserIdActionCreator())},
-        getProfileThunkCreator: (userID) => {dispatch(getProfileThunkCreator(userID))}
+        getProfileThunkCreator: (userID) => {dispatch(getProfileThunkCreator(userID))},
+        getStatusThunkCreator: (userID) => {dispatch(getStatusThunkCreator(userID))},
+        updateStatusThunkCreator: (status) => {dispatch(updateStatusThunkCreator(status))}
          }
 }
 const ProfileContainer = compose(

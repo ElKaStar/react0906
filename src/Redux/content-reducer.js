@@ -1,10 +1,13 @@
-import {getProfile, setUnfollow} from "../API/api";
+import {getProfile, profileAPI, setUnfollow} from "../API/api";
 import {addFollow, setFollowingInProgress} from "./users-reducer";
 
 const ADD_POST = 'ADD-POST';
 const ADD_NEW_POST_TEXT = 'ADD-NEW-POST-TEXT'
 const GET_USER_INFO = 'GET_USER-INFO'
 const REQUESTED_USER_ID = 'REQUESTED-USER_ID'
+const GET_STATUS='GET-STATUS'
+const UPDATE_STATUS='UPDATE-STATUS'
+const is_Fetching = 'is-Fetching'
 
 let initialState = {
     myPosts: [
@@ -32,7 +35,9 @@ let initialState = {
     ],
     newPostText: 'enter here',
     userInfo: null,
-    requestUserId: 10
+    requestUserId: 10,
+    status: '',
+    isFetching: false
 }
 
  const contentReducer = (state = initialState, action) => {
@@ -69,6 +74,24 @@ let initialState = {
                 userInfo: copyUserInfo
             }
             break;
+        }
+        case GET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
+        case UPDATE_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
+        case is_Fetching: {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         }
        default:
           return state;
@@ -112,6 +135,24 @@ export const addRequestedUserIdActionCreator = (id) => {
         }
     )
 }
+export const getStatusActionCreator = (status) => {
+    return (
+        {
+            type: GET_STATUS,
+            status: status
+
+        }
+    )
+}
+
+export const isFetchingActionCreator = (isFetching) => {
+    debugger
+    return ({
+        type: is_Fetching,
+        isFetching: isFetching
+    })
+}
+
 
 export const getProfileThunkCreator = (userID) => {
     return (dispatch) => {
@@ -121,5 +162,28 @@ export const getProfileThunkCreator = (userID) => {
             })
     }
 }
+
+export const getStatusThunkCreator = (userID) => {
+    return (dispatch) => {
+        profileAPI.getStatus(userID)
+            .then(data => {
+                dispatch(getStatusActionCreator(data.data))
+debugger
+            })
+    }
+}
+export const updateStatusThunkCreator = (status) => {
+    return (dispatch) => {
+        dispatch(isFetchingActionCreator(true))
+        profileAPI.updateStatus(status)
+            .then(data => {
+                dispatch(getStatusActionCreator(status))
+                debugger
+            })
+        dispatch(isFetchingActionCreator(false))
+    }
+}
+
+
 
 export default contentReducer

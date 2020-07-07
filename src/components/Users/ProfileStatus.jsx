@@ -1,6 +1,7 @@
 import React from 'react'
 
 class ProfileStatus extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -9,6 +10,7 @@ class ProfileStatus extends React.Component {
         }
 
     }
+
 
     onDoubleClickHandler = () => {
 
@@ -22,6 +24,17 @@ class ProfileStatus extends React.Component {
         this.setState({
             editMode: false
         })
+        console.log(this.state.status)
+        debugger
+        this.props.updateStatus(this.state.status)
+
+    }
+
+    onChangeHandler(event) {
+        console.log(event);
+        this.setState({
+                status: event.target.value
+            })
     }
 
     render() {
@@ -30,12 +43,12 @@ class ProfileStatus extends React.Component {
             <div>
                 {!this.state.editMode &&
                 <div>
-                    <span onDoubleClick={this.onDoubleClickHandler}>{this.props.status}</span>
+                    <span onDoubleClick={this.onDoubleClickHandler}>{`Status: ${this.state.status}`}</span>
                 </div>
                 }
                 {this.state.editMode &&
                     <div>
-                        <input autoFocus={true} onBlur={this.onBlurClickHandler.bind(this)} value={this.props.status}/>
+                        <input autoFocus={true} onChange={this.onChangeHandler.bind(this)} onBlur={this.onBlurClickHandler.bind(this)} value={this.state.status}/>
                     </div>
                 }
             </div>

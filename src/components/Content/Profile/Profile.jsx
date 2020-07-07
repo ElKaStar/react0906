@@ -13,7 +13,7 @@ const Profile = (props) => {
                 <img src={(props.userInfo.photos.small===null? userLogo: props.userInfo.photos.small)} alt='user-logo'/>
                 <div>
                     <p>{props.userInfo.fullName}</p>
-                    <ProfileStatus status={'Hello'}/>
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                     <h>{props.userInfo.aboutMe}</h><br/>
                     <text>Job status: {props.userInfo.lookingForAJobDescription} </text>
                 </div>

@@ -12,7 +12,8 @@ const instance = axios.create({
     }
 
 export const   getProfile = (userID) => {
-        return instance.get(`profile/${userID}`).then(response => response.data)
+    console.warn('Obsolete method: please use profileAPI object')
+        return profileAPI.getProfile(userID)
     }
 
 export const getUserData = () => {
@@ -27,6 +28,21 @@ export const  setFollow = (id) => {
 export const setUnfollow = (id) =>  {
         return instance.delete(`follow/${id}`).then(response => response.data)
 
+}
+
+export const profileAPI = {
+    getProfile(userID) {
+        return instance.get(`profile/${userID}`).then(response => response.data)
+    },
+    getStatus(userID) {
+        return instance.get(`/profile/status/${userID}`).then(response => response)
+    },
+    updateStatus(status) {
+        let myStatus = {
+            status: status
+        }
+        return instance.put(`/profile/status`, myStatus).then(response => response)
+    }
 }
 
 
