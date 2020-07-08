@@ -8,14 +8,29 @@ class ProfileStatus extends React.Component {
             editMode:false,
             status: this.props.status
         }
-
     }
+// componentDidMount() {
+//     this.setState({
+//         status: this.props.status
+//     })
+// }
 
+componentDidUpdate(prevProps, prevState, snapshot) {
+        debugger
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
 
-    onDoubleClickHandler = () => {
+    console.log('update!!!')
+}
+
+    onDoubleClickHandler = (state) => {
 
         this.setState({
-            editMode: true
+            editMode: true,
+            status: state.status
         })
     }
 
@@ -25,15 +40,14 @@ class ProfileStatus extends React.Component {
             editMode: false
         })
         console.log(this.state.status)
-        debugger
         this.props.updateStatus(this.state.status)
 
     }
 
-    onChangeHandler(event) {
-        console.log(event);
+    onChangeHandler = (e) => {
+        console.log(e);
         this.setState({
-                status: event.target.value
+                status: e.target.value
             })
     }
 
@@ -43,7 +57,7 @@ class ProfileStatus extends React.Component {
             <div>
                 {!this.state.editMode &&
                 <div>
-                    <span onDoubleClick={this.onDoubleClickHandler}>{`Status: ${this.state.status}`}</span>
+                    <span onDoubleClick={this.onDoubleClickHandler.bind(this, this.state)}>{`Status: ${this.state.status}`}</span>
                 </div>
                 }
                 {this.state.editMode &&
@@ -54,8 +68,6 @@ class ProfileStatus extends React.Component {
             </div>
         )
     }
-
-
 }
 
 export default ProfileStatus

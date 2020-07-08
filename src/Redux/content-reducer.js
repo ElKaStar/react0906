@@ -68,7 +68,6 @@ let initialState = {
         }
         case GET_USER_INFO: {
             let copyUserInfo = action.userInfo
-            debugger
             return {
                 ...state,
                 userInfo: copyUserInfo
@@ -165,10 +164,11 @@ export const getProfileThunkCreator = (userID) => {
 
 export const getStatusThunkCreator = (userID) => {
     return (dispatch) => {
+
         profileAPI.getStatus(userID)
             .then(data => {
                 dispatch(getStatusActionCreator(data.data))
-debugger
+
             })
     }
 }
