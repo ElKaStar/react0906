@@ -44,9 +44,10 @@ let initialState = {
 
     switch (action.type) {
         case ADD_POST: {
+            debugger
             return  {
                ...state,
-               myPosts: [...state.myPosts, {id: '4', from: 'Elena', message: state.newPostText, date: '25.06.20', like: '0'}],
+               myPosts: [...state.myPosts, {id: '4', from: 'Elena', message: action.newPost, date: '25.06.20', like: '0'}],
                newPostText: ''
            }
 
@@ -99,11 +100,12 @@ let initialState = {
 
     return state
 }
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (newPost) => {
 
    return (
        {
-          type: ADD_POST
+          type: ADD_POST,
+          newPost: newPost
        }
    )
 }

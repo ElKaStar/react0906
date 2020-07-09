@@ -53,7 +53,7 @@ const messageReducer = (state = initialState, action) => {
                     id: '5',
                     from: 'new',
                     to: 'new',
-                    message: state.newMessageText,
+                    message: action.newMessage,
                     date: '20.06.20'
                 }]
 
@@ -75,11 +75,12 @@ const messageReducer = (state = initialState, action) => {
     return state
 }
 
-export const addMessageActionCreator = () => {
+export const addMessageActionCreator = (newMessage) => {
 
     return (
         {
-            type: ADD_MESSAGE
+            type: ADD_MESSAGE,
+            newMessage: newMessage
         }
     )
 }

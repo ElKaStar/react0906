@@ -11,7 +11,7 @@ import Users from "./components/Users/Users";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Content/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/login";
+import Login from "./components/Forms/login";
 
 
 const App = (props) => {

@@ -3,15 +3,16 @@ import st from './Dialogs.module.css'
 import {NavLink, Redirect} from "react-router-dom"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import Login from "../../Login/login";
+import Login from "../../Forms/login";
+import FormNewMessage from "../../Forms/FormNewMessage";
 
 
 const Dialogs = (props) => {
 console.log(props)
     let newRef = React.createRef()
 
-    let onClickHandler = () => {
-        props.addMessage()
+    let onClickHandler = (newMessage) => {
+        props.addMessage(newMessage)
     }
 
     let onChangeHandler = (e) => {
@@ -33,9 +34,7 @@ console.log(props)
 
                     </div>
                     <div className={st.messages}>
-                        <textarea placeholder='enter here' onChange={onChangeHandler} id='newMessage' ref={newRef}
-                                  value={props.profilePage.newMessageText}/>
-                        <button onClick={onClickHandler}>Send</button>
+                        <FormNewMessage onClickHandler={onClickHandler}/>
                         {props.profilePage.profilePage.allMessages.map((element) => {
                             return (
                                 <div key={element.id}>
