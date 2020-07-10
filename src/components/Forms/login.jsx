@@ -1,6 +1,7 @@
 import React from 'react'
 import {Field, reduxForm} from "redux-form";
 import {alphaNumeric, minLength1, renderField, requiredString} from "./Validation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 class Login extends React.Component {
@@ -9,18 +10,39 @@ class Login extends React.Component {
           // print the form values to the console
           console.log(values)
      }
+
+
      render() {
-          return <LoginReduxForm onSubmit={this.submit} />
+
+          return (
+              <div>
+              <LoginReduxForm onSubmit={this.submit}/>
+              </div>
+              )
      }
 
 }
 
-const LoginForm = (props) => {
-     const { handleSubmit } = props
+class LoginForm extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            checkedCaptcha : false
+        }
+    }
+
+
+
+    onChangecaptcha = (value) => {
+       this.setState({
+           checkedCaptcha: (value? true: false)
+       })
+    }
+render() {
      return (
          <div>
               <p>LOGIN</p>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={this.props.handleSubmit}>
                    <div>
                         <Field
                             label={"Login"}
@@ -49,12 +71,14 @@ const LoginForm = (props) => {
                         />remember me
                    </div>
                    <div>
-                        <button type={"submit"}>Login</button>
+                        <button disabled={!this.state.checkedCaptcha} type={"submit"}>Login</button>
+                       <ReCAPTCHA sitekey='6Le4-a8ZAAAAAAdxK3R8n7ntfVnbLYJqwT87stUC' onChange={this.onChangecaptcha}/>
                    </div>
               </form>
          </div>
 
      )
+}
 
 }
 
