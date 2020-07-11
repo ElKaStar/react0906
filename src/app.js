@@ -12,25 +12,54 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Content/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Forms/login";
+import {getUserDataThunkCreator} from "./Redux/auth-reducer";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import {compose} from "redux";
+import {isInitAppThunkCreator} from "./Redux/app-reducer";
+import Loader from "./components/Users/loader";
 
+class App extends React.Component {
 
-const App = (props) => {
+    componentDidMount() {
+        this.props.isInitAppThunkCreator()
+    }
 
+    render() {
 
-    return (
+        if (!this.props.isInitApp) {
+          return   (<Loader/>)
+        }
 
-        <div className='wrapper'>
-        <HeaderContainer store={props.store}/>
-        <Navbar/>
-        <div>
-        <Route path='/messages' render={ () => <DialogsContainer store={props.store}/> }/>
-        <Route path='/profile/:UserID?'  render={ () => <ProfileContainer store={props.store} /> }/>
-        <Route path='/users'    render={ () => <UsersContainer store={props.store}/>}/>
-        <Route path='/login'    render={ () => <Login store={props.store}/>}/>
-        </div>
-        </div>
+        return (
 
-    )}
+            <div className='wrapper'>
+                <HeaderContainer store={this.props.store}/>
+                <Navbar/>
+                <div>
+                    <Route path='/messages' render={() => <DialogsContainer store={this.props.store}/>}/>
+                    <Route path='/profile/:UserID?' render={() => <ProfileContainer store={this.props.store}/>}/>
+                    <Route path='/users' render={() => <UsersContainer store={this.props.store}/>}/>
+                    <Route path='/login' render={() => <Login store={this.props.store}/>}/>
+                </div>
+            </div>
 
+        )
+    }
+}
+let mapStateToProps = (state) => {
 
-export default App
+    return {
+        isInitApp: state.app.isInitApp
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        isInitAppThunkCreator: () => {dispatch(isInitAppThunkCreator())},
+    }
+}
+
+export default compose(
+        withRouter,
+        connect(mapStateToProps,mapDispatchToProps))(App)

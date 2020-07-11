@@ -1,4 +1,5 @@
 import {getUserData, profileAPI} from "../API/api";
+import {stopSubmit} from "redux-form";
 
 
 const GET_USER_ID = 'GET-USER-ID';
@@ -56,7 +57,7 @@ export const getUserIDActionCreator = () => {
 
 export const getUserDataThunkCreator = () => {
     return (dispatch) => {
-        getUserData().then(response => {
+       return getUserData().then(response => {
             if (response.resultCode === 0) {
                 dispatch(setUserDataActionCreator(response.data.id, response.data.email, null , true,  response.data.login))
             }
@@ -72,6 +73,9 @@ export const loginThunkCreator = (email, password, rememberMe) => {
             if (response.resultCode === 0) {
                 console.log(response)
                 dispatch(getUserDataThunkCreator())
+            } else {
+                let messages = response.messages.length > 0? response.messages[0]: "Some error"
+                dispatch(stopSubmit("LoginForm", {_error: messages}))
             }
         })
 

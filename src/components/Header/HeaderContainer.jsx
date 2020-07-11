@@ -10,17 +10,17 @@ import {connect} from "react-redux";
 import usersAPI from "../../API/api";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {getCurrentUserID} from "../../Redux/users-reducer";
 
 class HeaderClass extends React.Component {
 
-    componentDidMount() {
-
-        this.props.getUserDataThunkCreator()
-    }
+constructor(props) {
+    super(props);
+}
 
 
     render() {
-        console.log('a im in header container')
+
         return (
             <header className={c.header}>
             <Header {...this.props}/>
@@ -46,7 +46,8 @@ let mapDispatchToProps = (dispatch) => {
     return {
         setUserData: (userID, email, login) => {dispatch(setUserDataActionCreator(userID, email, login))},
         getUserDataThunkCreator: () => {dispatch(getUserDataThunkCreator())},
-        logout: () => {dispatch(logoutThunkCreator())}
+        logout: () => {dispatch(logoutThunkCreator())},
+        getCurrentUserID: (ID) => {dispatch(getCurrentUserID(ID))}
     }
 }
 const HeaderContainer = compose(

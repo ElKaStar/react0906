@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {addMessageActionCreator, addNewMessageTextActionCreator} from "../../Redux/message-reducer";
 import {loginThunkCreator, logoutThunkCreator} from "../../Redux/auth-reducer";
 import {Redirect} from "react-router-dom";
+import './StyleForm.css'
 
 
 class Login extends React.Component {
@@ -85,6 +86,7 @@ render() {
                    </div>
                    <div>
                         <button disabled={!this.state.checkedCaptcha} type={"submit"}>Login</button>
+                       <div className='errorForm'>{this.props.error ? this.props.error: ' '}</div>
                        <ReCAPTCHA sitekey='6Le4-a8ZAAAAAAdxK3R8n7ntfVnbLYJqwT87stUC' onChange={this.onChangecaptcha}/>
                    </div>
               </form>

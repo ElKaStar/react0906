@@ -44,7 +44,6 @@ let initialState = {
 
     switch (action.type) {
         case ADD_POST: {
-            debugger
             return  {
                ...state,
                myPosts: [...state.myPosts, {id: '4', from: 'Elena', message: action.newPost, date: '25.06.20', like: '0'}],
@@ -157,20 +156,22 @@ export const isFetchingActionCreator = (isFetching) => {
 
 export const getProfileThunkCreator = (userID) => {
     return (dispatch) => {
+        dispatch(isFetchingActionCreator(true))
         getProfile(userID)
             .then(data => {
                 dispatch(getUserInfoActionCreator(data))
             })
+        dispatch(isFetchingActionCreator(false))
     }
 }
 
 export const getStatusThunkCreator = (userID) => {
     return (dispatch) => {
-
+        dispatch(isFetchingActionCreator(true))
         profileAPI.getStatus(userID)
             .then(data => {
                 dispatch(getStatusActionCreator(data.data))
-
+                dispatch(isFetchingActionCreator(false))
             })
     }
 }

@@ -16,27 +16,39 @@ import {compose} from "redux";
 
 
 class ProfileClass extends React.Component {
+
     constructor(props) {
         super(props);
     }
 
 
     componentDidMount() {
-        console.log(this.props)
-        //console.log(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.currentUserID}`)
-        let userID = (!this.props.match.params.UserID? this.props.authUserID : this.props.match.params.UserID)
-       this.props.getProfileThunkCreator(userID)
+        let userID = (!this.props.match.params.UserID ? this.props.authUserID : this.props.match.params.UserID)
+        if (!userID) {
+            this.props.history.push('/login')
+        }
+        console.log('userID', userID)
+        this.props.getProfileThunkCreator(userID)
         this.props.getStatusThunkCreator(userID)
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
 
+        if (prevProps.match.params.UserID !== this.props.match.params.UserID) {
+            let currentUserID = this.props.match.params.UserID
+            this.props.getProfileThunkCreator(!currentUserID ? this.props.authUserID : currentUserID)
+            this.props.getStatusThunkCreator(!currentUserID ? this.props.authUserID : currentUserID)
+        }
     }
 
     render() {
-
-            return (
-                <div>
-                    {this.props.userInfo === null ? <Loader/> : <Content {...this.props}/>}
-                </div>
-            )
+        if (this.props.isFetching) {
+            return <Loader/>
+        }
+        return (
+            <div>
+                {this.props.userInfo === null ? <Loader/> : <Content {...this.props}/>}
+            </div>
+        )
 
 
     }
@@ -51,7 +63,8 @@ let mapStateToProps = (state) => {
         requestUserId: state.myPosts.requestUserId,
         authUserID: state.auth.userID,
         status:state.myPosts.status,
-        isFetching: state.myPosts.isFetching
+        isFetching: state.myPosts.isFetching,
+        currentUserID: state.users.currentUserID
 
     }
 }

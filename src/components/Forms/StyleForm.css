@@ -1,3 +1,8 @@
 .errorType {
     color: #ff0000;
 }
+
+.errorForm {
+    color: red;
+    font-size: large;
+}

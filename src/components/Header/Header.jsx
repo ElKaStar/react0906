@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 
 const Header = (props) => {
 
-    console.log(props);
+
     return (
 
         <div className={c.header}>

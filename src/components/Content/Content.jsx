@@ -12,7 +12,7 @@ console.log(props)
 
         return (
             <div>
-                {props.isFetching? <Loader/> : <Profile userInfo={props.userInfo} status={props.status} updateStatus={props.updateStatusThunkCreator}/>}
+                {props.isFetching? <Loader/> : <Profile userInfo={props.userInfo} currentUserID={props.currentUserID} status={props.status} updateStatus={props.updateStatusThunkCreator}/>}
                 <MyPostsContainer />
             </div>
         )
