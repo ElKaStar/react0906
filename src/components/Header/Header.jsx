@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 
 
 const Header = (props) => {
+
     console.log(props);
     return (
 
@@ -13,7 +14,12 @@ const Header = (props) => {
             <img src='https://www.freelogodesign.org/Content/img/logo-samples/bakary.png' alt='logo'/>
             <div className={c.login_block}>
                 {props.isAuth?
-                    <NavLink to={'/profile/'+ props.userID}>{props.login}</NavLink>
+                    <div>
+                        <NavLink to={'/profile/'+ props.userID}>
+                        <div>{props.login}</div>
+                        </NavLink>
+                    <button onClick={props.logout}>Log out</button>
+                    </div>
                     : <NavLink to={'/login'}>Sign in</NavLink>}
             </div>
         </div>

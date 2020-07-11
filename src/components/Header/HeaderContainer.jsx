@@ -5,7 +5,7 @@ import c from './Header.module.css'
 import {NavLink} from "react-router-dom";
 import Header from "./Header";
 import {addRequestedUserIdActionCreator, getUserInfoActionCreator} from "../../Redux/content-reducer";
-import {getUserDataThunkCreator, setUserDataActionCreator} from "../../Redux/auth-reducer";
+import {getUserDataThunkCreator, logoutThunkCreator, setUserDataActionCreator} from "../../Redux/auth-reducer";
 import {connect} from "react-redux";
 import usersAPI from "../../API/api";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -17,6 +17,7 @@ class HeaderClass extends React.Component {
 
         this.props.getUserDataThunkCreator()
     }
+
 
     render() {
         console.log('a im in header container')
@@ -44,7 +45,8 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         setUserData: (userID, email, login) => {dispatch(setUserDataActionCreator(userID, email, login))},
-        getUserDataThunkCreator: () => {dispatch(getUserDataThunkCreator())}
+        getUserDataThunkCreator: () => {dispatch(getUserDataThunkCreator())},
+        logout: () => {dispatch(logoutThunkCreator())}
     }
 }
 const HeaderContainer = compose(

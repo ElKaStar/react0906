@@ -2,18 +2,31 @@ import React from 'react'
 import {Field, reduxForm} from "redux-form";
 import {alphaNumeric, minLength1, renderField, requiredString} from "./Validation";
 import ReCAPTCHA from "react-google-recaptcha";
+import {connect} from "react-redux";
+import {addMessageActionCreator, addNewMessageTextActionCreator} from "../../Redux/message-reducer";
+import {loginThunkCreator, logoutThunkCreator} from "../../Redux/auth-reducer";
+import {Redirect} from "react-router-dom";
 
 
 class Login extends React.Component {
 
      submit = values => {
+         console.log(values)
+
           // print the form values to the console
-          console.log(values)
+          this.props.login(values.login, values.password, values.rememberMe)
+     }
+     componentDidUpdate(prevProps, prevState, snapshot) {
+         console.log('login is DIDupdated ' + Date())
      }
 
 
-     render() {
-
+    render() {
+         console.log('props:', this.props)
+         if (this.props.isAuth) {
+             return <Redirect to={"/profile"}/>
+         }
+         //console.log('login is updated ' + Date())
           return (
               <div>
               <LoginReduxForm onSubmit={this.submit}/>
@@ -50,14 +63,14 @@ render() {
                             type="text"
                             component={renderField}
                             validate={[requiredString, minLength1]}
-                            warn={alphaNumeric}
+
                         />
                    </div>
                    <div>
                         <Field
                             label={"Password"}
                             name={"password"}
-                            type="text"
+                            type={"password"}
                             component={renderField}
                             validate={[requiredString, minLength1]}
                             warn={alphaNumeric}
@@ -88,8 +101,23 @@ const LoginReduxForm = reduxForm({
      form: 'LoginForm'
 })(LoginForm)
 
+let mapStateToProps = (state) => {
+
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        login: (email, password, rememberMe) => {
+            dispatch(loginThunkCreator(email, password, rememberMe))
+        },
+        logout: () => {
+            dispatch(logoutThunkCreator())
+        }
+    }
+}
 
 
-
-
-export default Login
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

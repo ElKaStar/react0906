@@ -1,4 +1,4 @@
-import {getUserData} from "../API/api";
+import {getUserData, profileAPI} from "../API/api";
 
 
 const GET_USER_ID = 'GET-USER-ID';
@@ -8,20 +8,20 @@ const SET_USER_DATA = 'SET-USER-DATA';
 let initialState = {
     userID: null,
     email: null,
-    login: null,
+    password: null,
     isFetching: false,
-    isAuth: false
+    isAuth: false,
+    login: null
 
 }
 
 const authReducer = (state = initialState, action) => {
-
+console.log(action.type, action)
     switch (action.type) {
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.userData,
-                isAuth: true
+                ...action.userData
             }
             break
         }
@@ -35,11 +35,12 @@ const authReducer = (state = initialState, action) => {
 }
 
 
-export const setUserDataActionCreator = (userID, email, login) => {
+export const setUserDataActionCreator = (userID, email, password, isAuth, login) => {
+    console.log(userID, email, password, isAuth)
     return (
         {
             type: SET_USER_DATA,
-            userData: { userID, email, login}
+            userData: { userID, email, password, isAuth, login}
 
         }
     )
@@ -57,7 +58,31 @@ export const getUserDataThunkCreator = () => {
     return (dispatch) => {
         getUserData().then(response => {
             if (response.resultCode === 0) {
-                dispatch(setUserDataActionCreator(response.data.id, response.data.email, response.data.login ))
+                dispatch(setUserDataActionCreator(response.data.id, response.data.email, null , true,  response.data.login))
+            }
+        })
+
+    }
+}
+
+export const loginThunkCreator = (email, password, rememberMe) => {
+    return (dispatch) => {
+        profileAPI.login(email, password, rememberMe).then(response => {
+            console.log('thunkcreator login')
+            if (response.resultCode === 0) {
+                console.log(response)
+                dispatch(getUserDataThunkCreator())
+            }
+        })
+
+    }
+}
+
+export const logoutThunkCreator = () => {
+    return (dispatch) => {
+        profileAPI.logout().then(response => {
+            if (response.resultCode === 0) {
+                dispatch(setUserDataActionCreator(null, null, null, false))
             }
         })
 
