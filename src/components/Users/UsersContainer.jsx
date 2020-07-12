@@ -15,6 +15,14 @@ import User from "./User";
 import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage, getCurrentUserIDS, getFollowingInProgress, getIsAuth,
+    getIsFetching,
+    getPageSize,
+    getStartPosition,
+    getTotalUsersCount,
+    getUsers, getUserSpecial
+} from "../../Redux/users-selectors";
 
 
 
@@ -84,20 +92,35 @@ class UserClass extends React.Component  {
 
 }
 
+// let mapStateToProps = (state) => {
+//     console.log(state);
+//     return {
+//         users: state.users.users,
+//         pagingSize: state.users.pagingSize,
+//         startPosition: state.users.startPosition,
+//         totalUsersCount: state.users.totalUsersCount,
+//         currentPage: state.users.currentPage,
+//         isFetching: state.users.isFetching,
+//         currentUserID: state.users.currentUserID,
+//         followingInProgress: state.users.followingInProgress,
+//         isAuth: state.auth.isAuth
+//     }
+// }
 let mapStateToProps = (state) => {
     console.log(state);
     return {
-        users: state.users.users,
-        pagingSize: state.users.pagingSize,
-        startPosition: state.users.startPosition,
-        totalUsersCount: state.users.totalUsersCount,
-        currentPage: state.users.currentPage,
-        isFetching: state.users.isFetching,
-        currentUserID: state.users.currentUserID,
-        followingInProgress: state.users.followingInProgress,
-        isAuth: state.auth.isAuth
+        users: getUsers(state),
+        pagingSize: getPageSize(state),
+        startPosition: getStartPosition(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        currentUserID: getCurrentUserIDS(state),
+        followingInProgress: getFollowingInProgress(state),
+        isAuth: getIsAuth(state)
     }
 }
+
 
 // let mapDispatchToProps = (dispatch) => {
 //     return {
@@ -143,7 +166,8 @@ const UsersContainer = compose(
             setFollowingInProgress,
             getUsersThunkCreator,
             setFollowThunkCreator,
-            setUnfollowThunkCreator}),
+            setUnfollowThunkCreator,
+            getUserSpecial}),
             withAuthRedirect
 )(UserClass)
 

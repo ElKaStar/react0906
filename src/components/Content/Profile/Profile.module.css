@@ -1,6 +1,52 @@
 .content {
-
+    text-align: center;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 4fr 8fr;
+    grid-template-areas:
+            "left right";
 }
 .item {
 
 }
+.contentLeft {
+    grid-area: left;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: left;
+}
+
+.contentRight {
+    grid-area: right;
+    background: powderblue;
+    display: grid;
+    grid-template-rows: 4fr 4fr 4fr;
+    grid-template-areas:
+            "first"
+            "second"
+            "third";
+    text-align: left;
+}
+
+.status {
+    grid-area: first;
+    text-justify: auto;
+    padding-top: 2px;
+    margin-top: 2px;
+    background: #E8F0F8;
+}
+.nameItem {
+    background: #aee8f5;
+ }
+
+.statusPersonal {
+    grid-area: second;
+    background: #D1E1F1;
+}
+.statusJob {
+    grid-area: third;
+    background: #BAD2EA;
+}
+

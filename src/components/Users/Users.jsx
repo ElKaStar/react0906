@@ -10,7 +10,7 @@ let Users = (props) => {
 
     return (
         <div className={st.users}>
-            <div>
+
                 {(props.userPage.users.length === 0 ? <Loader/> :
                     <User users={props.userPage.users}
                           addFollow={props.userPage.addFollow}
@@ -21,27 +21,30 @@ let Users = (props) => {
                           setUnfollowThunkCreator={props.setUnfollowThunkCreator}
 
                     />)}
-                <div className={st.buttons}>
-                    <button onClick={() => {
+                <div className={st.paginationButtons}>
+                <div>
+                    <span className={st.paginationButton} onClick={() => {
                         props.onClickLastHandler(props.userPage.currentPage - 1)
-                    }}>Last
-                    </button>
-                    <button onClick={() => {
-                        props.onClickNextHandler(props.userPage.currentPage + 1)
-                    }}>Next
-                    </button>
+                    }}>{"<"}</span>
                 </div>
                 <div>
                     {props.arrPages.map((itemNumber) => {
-                        return (
+debugger
+                            if (itemNumber <=   props.userPage.currentPage + 2 && itemNumber >=   props.userPage.currentPage - 2) {
+                                return (
                             <span onClick={() => {
                                 props.onPageChanged(itemNumber)
                             }}
-                                  className={itemNumber === props.userPage.currentPage && st.selectedPage}>{itemNumber} </span>
-                        )
-                    })}
+                                  className={itemNumber === props.userPage.currentPage? st.selectedPage: st.paginationButton }>{itemNumber}</span>
+                    )
+                    }})}
                 </div>
-            </div>
+                <div>
+                    <span className={st.paginationButton} onClick={() => {
+                        props.onClickNextHandler(props.userPage.currentPage + 1)
+                    }}> {">"} </span>
+                </div>
+                </div>
         </div>
     )
 

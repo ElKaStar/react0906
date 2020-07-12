@@ -4,7 +4,7 @@
     color: white;
     font-size: large;
     text-shadow: lightslategrey;
-    font-family: Georgia;
+    font-family: "Modern No. 20";
 
 
 }
@@ -12,8 +12,8 @@
 
 }
 .item {
-    background-color: deeppink;
-    border: dimgrey solid 1px;
+    background-color: lightpink;
+    border: lightpink solid 1px;
     margin: 1px;
     padding: 0;
     box-shadow: dimgrey;

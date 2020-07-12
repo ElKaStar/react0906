@@ -18,3 +18,22 @@
     font-weight: bold;
     text-decoration: none;
 }
+
+.loginItems {
+    display: flex;
+    flex-direction: row;
+}
+
+.item{
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    background: deeppink;
+    padding: 3px;
+    border-radius: 1px;
+    margin-top: 2px;
+    margin-right: 2px;
+    text-shadow: purple;
+
+
+}

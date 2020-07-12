@@ -13,12 +13,16 @@ const Header = (props) => {
         <div className={c.header}>
             <img src='https://www.freelogodesign.org/Content/img/logo-samples/bakary.png' alt='logo'/>
             <div className={c.login_block}>
-                {props.isAuth?
-                    <div>
-                        <NavLink to={'/profile/'+ props.userID}>
-                        <div>{props.login}</div>
+                {props.isAuth ?
+                    <div className={c.loginItems}>
+                        <div className={c.item}>
+                        <NavLink to={'/profile/' + props.userID}>
+                            {"Home page"}
                         </NavLink>
-                    <button onClick={props.logout}>Log out</button>
+                        </div>
+                        <div className={c.item}>
+                        <span onClick={props.logout}>Log out</span>
+                        </div>
                     </div>
                     : <NavLink to={'/login'}>Sign in</NavLink>}
             </div>
