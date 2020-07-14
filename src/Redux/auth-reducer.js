@@ -55,16 +55,14 @@ export const getUserIDActionCreator = () => {
     )
 }
 
-export const getUserDataThunkCreator = () => {
-    return (dispatch) => {
-       return getUserData().then(response => {
+export const getUserDataThunkCreator = () => async (dispatch) => {
+        let response = await getUserData()
             if (response.resultCode === 0) {
                 dispatch(setUserDataActionCreator(response.data.id, response.data.email, null , true,  response.data.login))
             }
-        })
+        }
 
-    }
-}
+
 
 export const loginThunkCreator = (email, password, rememberMe) => {
     return (dispatch) => {

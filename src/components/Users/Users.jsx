@@ -29,7 +29,7 @@ let Users = (props) => {
                 </div>
                 <div>
                     {props.arrPages.map((itemNumber) => {
-debugger
+
                             if (itemNumber <=   props.userPage.currentPage + 2 && itemNumber >=   props.userPage.currentPage - 2) {
                                 return (
                             <span onClick={() => {

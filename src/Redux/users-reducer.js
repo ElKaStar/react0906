@@ -161,7 +161,7 @@ export const setFetching = (isFetching) => {
 }
 
 export const getCurrentUserID = (id) => {
-debugger
+
     return (
         {
             type: GET_CURRENT_USER_ID,

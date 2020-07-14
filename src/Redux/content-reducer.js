@@ -146,7 +146,7 @@ export const getStatusActionCreator = (status) => {
 }
 
 export const isFetchingActionCreator = (isFetching) => {
-    debugger
+
     return ({
         type: is_Fetching,
         isFetching: isFetching
