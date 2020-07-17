@@ -6,18 +6,21 @@ import Content from './components/Content/Content'
 import Dialogs from './components/Content/Dialogs/Dialogs'
 import {BrowserRouter, Route} from 'react-router-dom'
 import MyPostsContainer from "./components/Content/MyPosts/MyPostsContainer";
-import DialogsContainer from "./components/Content/Dialogs/DialogsContainer";
 import Users from "./components/Users/Users";
-import UsersContainer from "./components/Users/UsersContainer";
+//import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Content/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Forms/login";
 import {getUserDataThunkCreator} from "./Redux/auth-reducer";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 import {isInitAppThunkCreator} from "./Redux/app-reducer";
 import Loader from "./components/Users/loader";
+import store from "./Redux/redux-store";
+
+const DialogsContainer = React.lazy(() => import( "./components/Content/Dialogs/DialogsContainer"));
+const UsersContainer = React.lazy(() => import( "./components/Users/UsersContainer"));
 
 class App extends React.Component {
 
@@ -37,9 +40,18 @@ class App extends React.Component {
                 <HeaderContainer store={this.props.store}/>
                 <Navbar/>
                 <div>
-                    <Route path='/messages' render={() => <DialogsContainer store={this.props.store}/>}/>
+                    <Route path='/messages' render={() => {
+                        return (<React.Suspense fallback={<div>Loading...</div>}>
+                        <DialogsContainer store={this.props.store}/>
+                        </React.Suspense>)
+                    }}/>
                     <Route path='/profile/:UserID?' render={() => <ProfileContainer store={this.props.store}/>}/>
-                    <Route path='/users' render={() => <UsersContainer store={this.props.store}/>}/>
+                    <Route path='/users' render={() => {
+                        return (
+                            <React.Suspense fallback={<div>Loading...</div>}>
+                        <UsersContainer store={this.props.store}/>
+                            </React.Suspense>)
+                                }}/>
                     <Route path='/login' render={() => <Login store={this.props.store}/>}/>
                 </div>
             </div>
@@ -59,7 +71,16 @@ let mapDispatchToProps = (dispatch) => {
         isInitAppThunkCreator: () => {dispatch(isInitAppThunkCreator())},
     }
 }
+let AppContainer = compose(
+    withRouter,
+    connect(mapStateToProps,mapDispatchToProps))(App)
 
-export default compose(
-        withRouter,
-        connect(mapStateToProps,mapDispatchToProps))(App)
+let MainApp = (props) => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default MainApp

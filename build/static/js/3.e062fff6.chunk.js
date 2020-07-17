@@ -1,0 +1,2 @@
+(this.webpackJsonpreact0906=this.webpackJsonpreact0906||[]).push([[3],{299:function(e,t,a){"use strict";a.r(t);a(0);var c=a(70),n=a(105),r=a(16),s=a(78),i=a(7),u=Object(i.d)(Object(r.b)((function(e){return{profilePage:e.profilePage}}),(function(e){return{addMessage:function(t){e(Object(c.a)(t))},addNewMessageText:function(t){e(Object(c.b)(t))}}})),s.a)(n.a);t.default=u}}]);
+//# sourceMappingURL=3.e062fff6.chunk.js.map
