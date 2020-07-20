@@ -5,9 +5,10 @@
     grid-template-columns: 4fr 8fr;
     grid-template-areas:
             "left right";
+    background: white;
 }
 .item {
-
+background: white;
 }
 .contentLeft {
     grid-area: left;

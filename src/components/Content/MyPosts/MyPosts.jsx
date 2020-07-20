@@ -31,7 +31,7 @@ const MyPosts = React.memo(props => {
                 <NewPost {...props} onClickHandler={onClickHandler}/>
             </div>
             <div className={classes.item}>
-                <Post myPosts={props.profilePage.myPosts}/>
+                <Post myPosts={props.myPosts.myPosts}/>
             </div>
         </div>
     )

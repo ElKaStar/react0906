@@ -47,7 +47,37 @@ export const profileAPI = {
         return instance.post(`auth/login`, {email, password, rememberMe}).then(response => response.data)
     },
     logout() {
-        return instance.delete(`auth/login`).then(response => response).then(response => response.data)
+        return instance.delete(`auth/login`).then(response => response.data)
+    },
+    setPhotoOnServer(file) {
+        const formData = new FormData()
+        formData.append("image", file)
+        return instance.put(`/profile/photo`, formData, {
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        }).then(response => response.data)
+    },
+    setProfileDetailsOnServer(details, userId, fullName) {
+        let detailsInfo = {
+            userId: userId,
+            aboutMe: details.personality,
+            fullName: fullName,
+            lookingForAJob: (!details.job ? true: false),
+            lookingForAJobDescription: details.job,
+            contacts: {
+                facebook: null,
+                github: null,
+                instagram: null,
+                mainLink: null,
+                twitter: null,
+                vk: null,
+                website: null,
+                youtube: null
+            }
+        }
+
+        return instance.put(`/profile`, detailsInfo).then(response => response.data)
     }
 }
 

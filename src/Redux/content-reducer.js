@@ -8,6 +8,8 @@ const REQUESTED_USER_ID = 'REQUESTED-USER_ID'
 const GET_STATUS='GET-STATUS'
 const UPDATE_STATUS='UPDATE-STATUS'
 const is_Fetching = 'is-Fetching'
+const update_Photo = 'update_Photo'
+const update_DetailsInfo='update_DetailsInfo'
 
 let initialState = {
     myPosts: [
@@ -37,7 +39,8 @@ let initialState = {
     userInfo: null,
     requestUserId: 10,
     status: '',
-    isFetching: false
+    isFetching: false,
+    profilePhoto: ''
 }
 
  const contentReducer = (state = initialState, action) => {
@@ -70,7 +73,8 @@ let initialState = {
             let copyUserInfo = action.userInfo
             return {
                 ...state,
-                userInfo: copyUserInfo
+                userInfo: copyUserInfo,
+                profilePhoto: copyUserInfo.photos.small
             }
             break;
         }
@@ -90,6 +94,24 @@ let initialState = {
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        }
+        case update_Photo: {
+
+            return {
+                ...state,
+                profilePhoto: action.profilePhoto
+            }
+        }
+        case update_DetailsInfo: {
+
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    aboutMe: action.details.aboutMe,
+                    lookingForAJobDescription: action.details.lookingForAJobDescription
+                }
             }
         }
        default:
@@ -153,6 +175,20 @@ export const isFetchingActionCreator = (isFetching) => {
     })
 }
 
+const updatePhoto = (profilePhoto) => {
+    return ({
+        type: update_Photo,
+        profilePhoto: profilePhoto
+    })
+
+}
+
+const updateProfileDetails = (details) => {
+    return ({
+        type: update_DetailsInfo,
+        details: details
+    })
+}
 
 export const getProfileThunkCreator = (userID) => {
     return (dispatch) => {
@@ -184,6 +220,26 @@ export const updateStatusThunkCreator = (status) => {
                 debugger
             })
         dispatch(isFetchingActionCreator(false))
+    }
+}
+
+export const changeProfilePhotoOnServerTC = (file) => {
+    return (dispatch) => {
+        dispatch(isFetchingActionCreator(true))
+        profileAPI.setPhotoOnServer(file)
+            .then(data => {
+
+                dispatch(updatePhoto(data.data.photos.small))
+            })
+        dispatch(isFetchingActionCreator(false))
+    }
+}
+export const changeProfileDetailsOnServerTC = (details, userID, fullName) => {
+    return (dispatch) => {
+        profileAPI.setProfileDetailsOnServer(details, userID, fullName)
+            .then(data => {
+                dispatch(getProfileThunkCreator(userID))
+            })
     }
 }
 

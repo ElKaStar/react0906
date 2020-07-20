@@ -40,6 +40,7 @@ export const phoneNumber = value =>
     : undefined
 
  export const renderField = ({
+      value,
       input,
       label,
       type,
@@ -47,11 +48,20 @@ export const phoneNumber = value =>
     }) => (
 
         <div>
-          <input {...input} placeholder={label} type={type} />
+          <input {...input} placeholder={label} type={type}/>
           {touched &&
             ((error && <span className='errorType'> {error}</span>) ||
               (warning && <span className='errorType'> {error}{warning}</span>))}
         </div>
 
     )
+
+export const renderFieldNew = (field) => (
+    <div>
+        <textarea {...field.input} type="textarea" value={field.value}/>
+        {field.meta.touched && field.meta.error &&
+        <span className="errorType">{field.meta.error}</span>}
+    </div>
+)
+
 

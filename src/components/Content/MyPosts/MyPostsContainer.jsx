@@ -9,7 +9,7 @@ import {addMessageActionCreator, addNewMessageTextActionCreator} from "../../../
 
 let mapStateToProps = (state) => {
     return {
-        profilePage: state.myPosts
+        myPosts: state.myPosts
     }
 }
 

@@ -4,7 +4,7 @@ import Header from './components/Header/Header'
 import Navbar from './components/Havbar/Havbar'
 import Content from './components/Content/Content'
 import Dialogs from './components/Content/Dialogs/Dialogs'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, HashRouter, Route} from 'react-router-dom'
 import MyPostsContainer from "./components/Content/MyPosts/MyPostsContainer";
 import Users from "./components/Users/Users";
 //import UsersContainer from "./components/Users/UsersContainer";
@@ -76,11 +76,11 @@ let AppContainer = compose(
     connect(mapStateToProps,mapDispatchToProps))(App)
 
 let MainApp = (props) => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp

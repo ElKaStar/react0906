@@ -3,14 +3,14 @@ import classes from './Post.module.css'
 
 
 const Post = (props) => {
-
+    console.log(props);
     const onClickLike = () => {
 
     }
 
     return (
         <div className={classes.user}>
-            {console.log(props)}
+            {console.log(typeof props.myPosts)}
             {props.myPosts.map( (item) => {
           return (
               <p key={item.id}>

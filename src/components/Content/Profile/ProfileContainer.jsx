@@ -3,7 +3,7 @@ import Content from "../Content";
 import * as axios from "axios";
 import {connect} from "react-redux";
 import {
-    addRequestedUserIdActionCreator,
+    addRequestedUserIdActionCreator, changeProfileDetailsOnServerTC, changeProfilePhotoOnServerTC,
     getProfileThunkCreator, getStatusThunkCreator,
     getUserInfoActionCreator, isFetchingActionCreator, updateStatusThunkCreator
 } from "../../../Redux/content-reducer";
@@ -64,7 +64,8 @@ let mapStateToProps = (state) => {
         authUserID: state.auth.userID,
         status:state.myPosts.status,
         isFetching: state.myPosts.isFetching,
-        currentUserID: state.users.currentUserID
+        currentUserID: state.users.currentUserID,
+        profilePhoto: state.myPosts.profilePhoto
 
     }
 }
@@ -75,7 +76,9 @@ let mapDispatchToProps = (dispatch) => {
         addRequestedUserId: () => {dispatch(addRequestedUserIdActionCreator())},
         getProfileThunkCreator: (userID) => {dispatch(getProfileThunkCreator(userID))},
         getStatusThunkCreator: (userID) => {dispatch(getStatusThunkCreator(userID))},
-        updateStatusThunkCreator: (status) => {dispatch(updateStatusThunkCreator(status))}
+        updateStatusThunkCreator: (status) => {dispatch(updateStatusThunkCreator(status))},
+        changeProfilePhotoOnServer: (files) => {dispatch(changeProfilePhotoOnServerTC(files))},
+        changeProfileDetailsOnServer: (details, userID, fullName) => {dispatch(changeProfileDetailsOnServerTC(details, userID, fullName))}
          }
 }
 const ProfileContainer = compose(

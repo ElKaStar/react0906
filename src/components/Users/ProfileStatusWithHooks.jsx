@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 const ProfileStatusWithHooks =(props) => {
-
+    console.log(props.isOwnPage)
 let [editMode, setEditMode] = useState(false)
 let [status, setStatus] = useState(props.status)
 
@@ -9,11 +9,13 @@ let [status, setStatus] = useState(props.status)
 
         setStatus(props.status)
     }, [props.status])
+
   const  onDoubleClickHandler = () => {
-      setEditMode(true)
-    }
+      if (props.isOwnPage) {
+          setEditMode(true)
+      }
+  }
   const onChangeHandler = (e) => {
-    debugger
     setStatus(e.target.value)
     }
 

@@ -8,11 +8,10 @@ import Loader from "../Users/loader";
 
 
 const Content = (props) => {
-console.log(props)
 
         return (
             <div>
-                {props.isFetching? <Loader/> : <Profile userInfo={props.userInfo} currentUserID={props.currentUserID} status={props.status} updateStatus={props.updateStatusThunkCreator}/>}
+                {props.isFetching? <Loader/> : <Profile isOwnPage={!props.match.params.UserID? true: props.authUserID == props.match.params.UserID} userInfo={props.userInfo} changeProfilePhotoOnServer={props.changeProfilePhotoOnServer} currentUserID={props.currentUserID} profilePhoto={props.profilePhoto} status={props.status} updateStatus={props.updateStatusThunkCreator} updateDetails={props.changeProfileDetailsOnServer}/>}
                 <MyPostsContainer />
             </div>
         )
